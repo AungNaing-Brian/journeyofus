@@ -1,201 +1,127 @@
-/* =========================================
-FILE: script.js
-========================================= */
-
-/* =========================================
-   AOS INIT
-========================================= */
+/* =========================
+   AOS
+========================= */
 
 AOS.init({
-
-    duration:1200,
-    once:true
-
+  duration:1000,
+  once:true
 });
 
-/* =========================================
-   CUSTOM CURSOR
-========================================= */
-
-const cursor = document.querySelector(".cursor");
-
-document.addEventListener("mousemove",(e)=>{
-
-    cursor.style.left = e.clientX + "px";
-
-    cursor.style.top = e.clientY + "px";
-
-});
-
-/* =========================================
+/* =========================
    NAVBAR SCROLL
-========================================= */
+========================= */
 
-const navbar = document.querySelector(".navbar");
+const navbar = document.querySelector(".custom-navbar");
 
 window.addEventListener("scroll",()=>{
 
-    navbar.classList.toggle(
-        "scrolled",
-        window.scrollY > 50
-    );
+  if(window.scrollY > 50){
+    navbar.classList.add("scrolled");
+  }else{
+    navbar.classList.remove("scrolled");
+  }
 
 });
 
-/* =========================================
-   HERO GSAP
-========================================= */
+/* =========================
+   CUSTOM CURSOR
+========================= */
 
-gsap.from(".hero-badge",{
+const cursor = document.querySelector(".cursor");
 
-    y:50,
-    opacity:0,
-    duration:1
+window.addEventListener("mousemove",(e)=>{
 
-});
-
-gsap.from(".hero-title",{
-
-    y:100,
-    opacity:0,
-    duration:1.2,
-    delay:0.2
+  cursor.style.left = e.clientX + "px";
+  cursor.style.top = e.clientY + "px";
 
 });
 
-gsap.from(".hero-text",{
-
-    y:50,
-    opacity:0,
-    duration:1,
-    delay:0.5
-
-});
-
-gsap.from(".hero-buttons",{
-
-    y:50,
-    opacity:0,
-    duration:1,
-    delay:0.8
-
-});
-
-/* =========================================
-   COUNTER ANIMATION
-========================================= */
+/* =========================
+   COUNTER
+========================= */
 
 const counters = document.querySelectorAll(".counter");
 
 counters.forEach(counter=>{
 
-    const updateCounter = ()=>{
+  counter.innerText = "0";
 
-        const target = +counter.getAttribute("data-target");
+  const updateCounter = ()=>{
 
-        const count = +counter.innerText;
+    const target = +counter.getAttribute("data-target");
+    const current = +counter.innerText;
 
-        const speed = target / 100;
+    const increment = target / 100;
 
-        if(count < target){
+    if(current < target){
 
-            counter.innerText =
-            Math.ceil(count + speed);
+      counter.innerText =
+      `${Math.ceil(current + increment)}`;
 
-            setTimeout(updateCounter,30);
+      setTimeout(updateCounter,20);
 
-        }else{
+    }else{
 
-            counter.innerText = target + "+";
-        }
-    };
+      counter.innerText = target;
 
-    updateCounter();
+      if(target === 500){
+        counter.innerText = target + "K+";
+      }
 
-});
+      else if(target === 15){
+        counter.innerText = target + "M+";
+      }
 
-/* =========================================
-   SWIPER
-========================================= */
-
-var swiper = new Swiper(".mySwiper",{
-
-    slidesPerView:1,
-
-    spaceBetween:30,
-
-    loop:true,
-
-    autoplay:{
-
-        delay:3000,
-        disableOnInteraction:false
-
-    },
-
-    breakpoints:{
-
-        768:{
-            slidesPerView:2
-        }
+      else{
+        counter.innerText = target + "+";
+      }
 
     }
 
-});
+  };
 
-/* =========================================
-   SMOOTH SCROLL
-========================================= */
-
-document.querySelectorAll('a[href^="#"]')
-.forEach(anchor=>{
-
-    anchor.addEventListener("click",
-    function(e){
-
-        e.preventDefault();
-
-        document.querySelector(
-            this.getAttribute("href")
-        ).scrollIntoView({
-
-            behavior:"smooth"
-
-        });
-
-    });
+  updateCounter();
 
 });
 
-/* =========================================
-   CONTACT FORM
-========================================= */
+/* =========================
+   SWIPER
+========================= */
 
-const form =
-document.querySelector(".contact-form");
+var swiper = new Swiper(".mySwiper", {
 
-form.addEventListener("submit",(e)=>{
+  slidesPerView:1,
+  spaceBetween:25,
+  loop:true,
 
-    e.preventDefault();
+  autoplay:{
+    delay:2500,
+    disableOnInteraction:false,
+  },
 
-    alert(
-        "Transmission Sent Successfully 🚀"
-    );
+  breakpoints:{
 
-    form.reset();
+    768:{
+      slidesPerView:2,
+    },
+
+    1200:{
+      slidesPerView:4,
+    }
+
+  }
 
 });
 
-/* =========================================
-   PARALLAX EFFECT
-========================================= */
+/* =========================
+   SCROLL REVEAL
+========================= */
 
-window.addEventListener("scroll",()=>{
+ScrollReveal().reveal('.service-card,.film-card,.video-card',{
 
-    const scrollY = window.scrollY;
-
-    document.querySelector(".hero")
-    .style.backgroundPositionY =
-    scrollY * 0.5 + "px";
+  distance:'50px',
+  duration:1000,
+  interval:150,
+  origin:'bottom'
 
 });
